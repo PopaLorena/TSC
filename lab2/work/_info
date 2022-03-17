@@ -1,0 +1,130 @@
+m255
+K3
+13
+cModel Technology
+Z0 dD:\Facultate\TSF\lab2\lab2
+T_opt
+V>md`zj;T]^TK2WFnk6Wle3
+04 3 4 work top fast 0
+=1-b4a9fcd83ed8-622f220a-347-40dc
+o-quiet -auto_acc_if_foreign -work work
+n@_opt
+OE;O;6.6d;45
+Z1 dD:\Facultate\TSF\lab2\lab2
+vinstr_register
+Z2 Mx1 6 sv_std 3 std
+Z3 DXx6 sv_std 3 std 0 22 WnQ=;W1X^o9K1PIQTgInR3
+Z4 Mx2 4 work 18 instr_register_pkg
+Z5 DXx4 work 18 instr_register_pkg 0 22 :JTF@fFZEAY;_aRJ`=BP83
+V3z9A3Eb_VM7O2iR_@`ig80
+r1
+!s85 0
+31
+Izlgh4QQ_5WV`>EDVk6A=21
+S1
+Z6 dD:\Facultate\TSF\GIT\TSC\lab2
+w1647253293
+8D:/Facultate/TSF/GIT/TSC/lab2/lab_dut/instr_register.sv
+FD:/Facultate/TSF/GIT/TSC/lab2/lab_dut/instr_register.sv
+L0 9
+Z7 OE;L;6.6d;45
+Z8 o-work work -L mtiAvm -L mtiOvm -L mtiUPF
+!s100 6^c4H@z>TICN;NJ=0DO5K2
+!s105 instr_register_sv_unit
+Xinstr_register_pkg
+R2
+R3
+V:JTF@fFZEAY;_aRJ`=BP83
+r1
+31
+I:JTF@fFZEAY;_aRJ`=BP83
+S1
+R6
+w1647253262
+8D:/Facultate/TSF/GIT/TSC/lab2/lab_dut/instr_register_pkg.sv
+FD:/Facultate/TSF/GIT/TSC/lab2/lab_dut/instr_register_pkg.sv
+L0 5
+R7
+R8
+!s85 0
+!s100 V^fH5UCOegY6PL:OBDSV^3
+vinstr_register_test
+R2
+R3
+R4
+R5
+VEBCnBoI9@;K2I3Z?DhHY42
+r1
+31
+IELf:T5Ac0`?aahf:LV>5^1
+S1
+R6
+w1647257967
+8D:/Facultate/TSF/GIT/TSC/lab2/lab01_testbench-interface/instr_register_test.sv
+FD:/Facultate/TSF/GIT/TSC/lab2/lab01_testbench-interface/instr_register_test.sv
+L0 8
+R7
+R8
+!s85 0
+!s105 instr_register_test_sv_unit
+!s100 XdbW__VzFFSA@nX36zcWD3
+Ylab2_if
+R2
+R3
+R4
+R5
+Iczgi?M7IbF8_UlgH@5L_W2
+VkS`V<DHIbFke;:NabiDOh1
+Z9 !s105 tb_ifc_sv_unit
+S1
+R1
+w1647255670
+8D:/Facultate/TSF/lab2/lab2/lab01_testbench-interface/tb_ifc.sv
+FD:/Facultate/TSF/lab2/lab2/lab01_testbench-interface/tb_ifc.sv
+L0 5
+R7
+r1
+31
+R8
+!s100 =0FiAK9O?8CXV^a0[HBZn0
+!s85 0
+Ytb_ifc
+R2
+R3
+R4
+R5
+V[2MM;6bj4cE27ld353ZQ90
+r1
+31
+I8=1FCZV]z3V;AEThG[L=P2
+R9
+S1
+R6
+w1647257943
+8D:/Facultate/TSF/GIT/TSC/lab2/lab01_testbench-interface/tb_ifc.sv
+FD:/Facultate/TSF/GIT/TSC/lab2/lab01_testbench-interface/tb_ifc.sv
+L0 5
+R7
+R8
+!s85 0
+!s100 BC84V@QW:MOJh<?G>;_C32
+vtop
+R2
+R3
+R4
+R5
+Ve:gFW1CKLAXc^T:7k2HoD1
+r1
+31
+IWbn;^S6gaik2JT@?N<LOo1
+S1
+R6
+w1647257866
+8D:/Facultate/TSF/GIT/TSC/lab2/lab01_testbench-interface/top.sv
+FD:/Facultate/TSF/GIT/TSC/lab2/lab01_testbench-interface/top.sv
+L0 5
+R7
+R8
+!s85 0
+!s100 0<il72N2A_8bPFB25>Wb]3
+!s105 top_sv_unit
