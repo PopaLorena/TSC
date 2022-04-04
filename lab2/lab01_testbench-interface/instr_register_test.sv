@@ -15,6 +15,7 @@ module instr_register_test
   //timeunit 1ns/1ns;
 
   int seed = 555;
+  int k = 0;
 
   initial begin
     $display("\n\n***********************************************************");
@@ -33,19 +34,20 @@ module instr_register_test
 
     $display("\nWriting values to register stack...");
     @(posedge lab2_if.cb) lab2_if.cb.load_en <= 1'b1;  // enable writing to register
-    repeat (3) begin
-      @(lab2_if.cb) randomize_transaction;
+    repeat (5) begin
+      @(posedge lab2_if.cb) randomize_transaction;
       @(negedge lab2_if.cb) print_transaction;
     end
     @(posedge lab2_if.cb) lab2_if.cb.load_en <= 1'b0;  // turn-off writing to register
 
     // read back and display same three register locations
     $display("\nReading back the same register locations written...");
-    for (int i=0; i<=2; i++) begin
+    for (int i=4; i>=0; i--) begin
       // later labs will replace this loop with iterating through a
       // scoreboard to determine which addresses were written and
       // the expected values to be read back
-      @(posedge lab2_if.cb) lab2_if.cb.read_pointer <= i;
+      k = $unsigned($random)%5;
+      @(posedge lab2_if.cb) lab2_if.cb.read_pointer <= k;
       @(negedge lab2_if.cb) print_results;
     end
 
@@ -85,6 +87,7 @@ module instr_register_test
     $display("  opcode = %0d (%s)", lab2_if.cb.instruction_word.opc, lab2_if.cb.instruction_word.opc.name);
     $display("  operand_a = %0d",   lab2_if.cb.instruction_word.op_a);
     $display("  operand_b = %0d\n", lab2_if.cb.instruction_word.op_b);
+    $display("  result    = %0d\n", lab2_if.cb.instruction_word.result);
   endfunction: print_results
 
 endmodule: instr_register_test
