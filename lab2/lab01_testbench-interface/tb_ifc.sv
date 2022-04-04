@@ -16,7 +16,7 @@ interface tb_ifc (input logic clk);
    address_t      write_pointer, read_pointer;
    instruction_t  instruction_word;
   
-clocking cb @ ( clk);
+clocking cb @ ( clk); // asteapta schimbarile frontului
   output load_en;
   output reset_n;
   output opcode;

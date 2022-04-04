@@ -5,7 +5,7 @@
 package instr_register_pkg;
  // timeunit 1ns/1ns;
 
-  typedef enum logic [3:0] {
+  typedef enum logic [2:0] {
   	ZERO,
     PASSA,
     PASSB,

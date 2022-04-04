@@ -11,14 +11,14 @@ class first_class;
 
   //initial begin
   task run();
-    $display("\n\n***********************************************************");
+    $display("\n\n******************FIRST DISPLAY**************************");
     $display(    "***  THIS IS NOT A SELF-CHECKING TESTBENCH (YET).  YOU  ***");
     $display(    "***  NEED TO VISUALLY VERIFY THAT THE OUTPUT VALUES     ***");
     $display(    "***  MATCH THE INPUT VALUES FOR EACH REGISTER LOCATION  ***");
     $display(    "***********************************************************");
 
     $display("\nReseting the instruction register...");
-    lab2_if.cb.write_pointer  <= 5'h00;         // initialize write pointer
+    lab2_if.cb.write_pointer  <= 5'h00;         // initialize write pointer 5 biti in heza cu valoarea 0
     lab2_if.cb.read_pointer   <= 5'h1F;         // initialize read pointer
     lab2_if.cb.load_en        <= 1'b0;          // initialize load control line
     lab2_if.cb.reset_n        <= 1'b0;          // assert reset_n (active low)
@@ -27,7 +27,7 @@ class first_class;
 
     $display("\nWriting values to register stack...");
     @(posedge lab2_if.cb) lab2_if.cb.load_en <= 1'b1;  // enable writing to register
-    repeat (5) begin
+    repeat (10) begin
       @(posedge lab2_if.cb) randomize_transaction;
       @(negedge lab2_if.cb) print_transaction;
     end
@@ -35,11 +35,11 @@ class first_class;
 
     // read back and display same three register locations
     $display("\nReading back the same register locations written...");
-    for (int i=4; i>=0; i--) begin
+    for (int i=9; i>=0; i--) begin
       // later labs will replace this loop with iterating through a
       // scoreboard to determine which addresses were written and
       // the expected values to be read back
-      k = $unsigned($random)%5;
+      k = $unsigned($random)%10;
       @(posedge lab2_if.cb) lab2_if.cb.read_pointer <= k;
       @(negedge lab2_if.cb) print_results;
     end
