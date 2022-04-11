@@ -28,6 +28,7 @@ import instr_register_pkg::*;  // user-defined types are defined in instr_regist
       foreach (iw_reg[i])
         iw_reg[i] = '{opc:ZERO,default:0};  // reset to all zeros
     end
+    
     else if (load_en) begin
          case (opcode)
         PASSA : iw_reg[write_pointer] = '{opcode, operand_a, operand_b, operand_a};

@@ -1,12 +1,13 @@
 class first_class;
   
   virtual tb_ifc.TEST lab2_if;
+  parameter NUMBER_Of_TR = 100;
 
  function new(virtual tb_ifc _lab2_if);
     lab2_if= _lab2_if;
  endfunction
 
-  int seed = 555;
+  // int seed = 777;
   int k = 0;
 
   //initial begin
@@ -27,7 +28,7 @@ class first_class;
 
     $display("\nWriting values to register stack...");
     @(posedge lab2_if.cb) lab2_if.cb.load_en <= 1'b1;  // enable writing to register
-    repeat (10) begin
+    repeat (NUMBER_Of_TR) begin
       @(posedge lab2_if.cb) randomize_transaction;
       @(negedge lab2_if.cb) print_transaction;
     end
@@ -35,11 +36,11 @@ class first_class;
 
     // read back and display same three register locations
     $display("\nReading back the same register locations written...");
-    for (int i=9; i>=0; i--) begin
+    for (int i=NUMBER_Of_TR-1; i>=0; i--) begin
       // later labs will replace this loop with iterating through a
       // scoreboard to determine which addresses were written and
       // the expected values to be read back
-      k = $unsigned($random)%10;
+      k = $unsigned($urandom)%10;
       @(posedge lab2_if.cb) lab2_if.cb.read_pointer <= k;
       @(negedge lab2_if.cb) print_results;
     end
@@ -63,9 +64,9 @@ class first_class;
     // write_pointer values in a later lab
     //
     static int temp = 0;
-    lab2_if.cb.operand_a     <= $random(seed)%16;                 // between -15 and 15
-    lab2_if.cb.operand_b     <= $unsigned($random)%16;            // between 0 and 15
-    lab2_if.cb.opcode        <= opcode_t'($unsigned($random)%8);  // between 0 and 7, cast to opcode_t type
+    lab2_if.cb.operand_a     <= ($urandom)%16;                 // between -15 and 15 // random genereaza valori pe 32 de biti.
+    lab2_if.cb.operand_b     <= $unsigned($uirandom)%16;            // between 0 and 15
+    lab2_if.cb.opcode        <= opcode_t'($unsigned($urandom)%8);  // between 0 and 7, cast to opcode_t type
     lab2_if.cb.write_pointer <= temp++;
   endfunction: randomize_transaction
 
