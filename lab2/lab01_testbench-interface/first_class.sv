@@ -3,8 +3,25 @@ class first_class;
   virtual tb_ifc.TEST lab2_if;
   parameter NUMBER_Of_TR = 100;
 
+  covergroup my_funct_coverage;
+    coverpoint  lab2_if.cb.operand_a{
+      bins  operand_a_values_neg[] = {[-15:-1]};
+      bins  operand_a_values_zero[] = {0};
+      bins  operand_a_values_pos[] = {[1:15]};
+    }
+    coverpoint lab2_if.cb.operand_b{
+      bins operand_b_values_zero[]  = {0};
+      bins operand_b_values_pos[]  = {[1:15]};
+    }
+    coverpoint lab2_if.cb.opcode{
+      bins opcode_values_zero[]  = {0};
+      bins opcode_values_pos[]  = {[1:7]};
+    }
+  endgroup
+
  function new(virtual tb_ifc _lab2_if);
     lab2_if= _lab2_if;
+    my_funct_coverage = new();
  endfunction
 
   // int seed = 777;
@@ -30,7 +47,9 @@ class first_class;
     @(posedge lab2_if.cb) lab2_if.cb.load_en <= 1'b1;  // enable writing to register
     repeat (NUMBER_Of_TR) begin
       @(posedge lab2_if.cb) randomize_transaction;
+      my_funct_coverage.sample();
       @(negedge lab2_if.cb) print_transaction;
+      my_funct_coverage.sample();
     end
     @(posedge lab2_if.cb) lab2_if.cb.load_en <= 1'b0;  // turn-off writing to register
 
@@ -42,7 +61,9 @@ class first_class;
       // the expected values to be read back
       k = $unsigned($urandom)%10;
       @(posedge lab2_if.cb) lab2_if.cb.read_pointer <= k;
+      my_funct_coverage.sample();
       @(negedge lab2_if.cb) print_results;
+      my_funct_coverage.sample();
     end
 
     @( posedge lab2_if.cb) ;
@@ -55,6 +76,7 @@ class first_class;
   endtask 
  // end
 
+
   function void randomize_transaction;
     // A later lab will replace this function with SystemVerilog
     // constrained random values
@@ -64,10 +86,11 @@ class first_class;
     // write_pointer values in a later lab
     //
     static int temp = 0;
-    lab2_if.cb.operand_a     <= ($urandom)%16;                 // between -15 and 15 // random genereaza valori pe 32 de biti.
-    lab2_if.cb.operand_b     <= $unsigned($uirandom)%16;            // between 0 and 15
+    lab2_if.cb.operand_a     <= ($signed($urandom))%16;                 // between -15 and 15 // random genereaza valori pe 32 de biti.
+    lab2_if.cb.operand_b     <= $unsigned($urandom)%16;            // between 0 and 15
     lab2_if.cb.opcode        <= opcode_t'($unsigned($urandom)%8);  // between 0 and 7, cast to opcode_t type
     lab2_if.cb.write_pointer <= temp++;
+    
   endfunction: randomize_transaction
 
   function void print_transaction;
