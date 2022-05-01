@@ -9,9 +9,10 @@
   `include "first_class.sv"
 
 module instr_register_test
-  (
-     tb_ifc.TEST lab2_if 
-  );
+  import instr_register_pkg::*;
+    (
+      tb_ifc.TEST lab2_if 
+    );
  
  //initializeza inceputul unui block temporar
   initial begin 

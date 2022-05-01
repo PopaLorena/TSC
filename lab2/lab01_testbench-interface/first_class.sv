@@ -1,7 +1,12 @@
 class first_class;
   
-  virtual tb_ifc.TEST lab2_if;
-  parameter NUMBER_Of_TR = 100;
+  virtual tb_ifc.TEST lab2_if;  
+  
+  // Number of transaction parameter
+  int NUMBER_Of_TR;
+
+  // Global error counter
+  int err_cnt;
 
   covergroup my_funct_coverage;
     coverpoint  lab2_if.cb.operand_a{
@@ -17,10 +22,14 @@ class first_class;
       bins opcode_values_zero[]  = {0};
       bins opcode_values_pos[]  = {[1:7]};
     }
+    coverpoint lab2_if.cb.instruction_word.result {
+      bins result_values[] = {[-225:225]};
+    }
   endgroup
 
  function new(virtual tb_ifc _lab2_if);
     lab2_if= _lab2_if;
+    this.err_cnt = 0;
     my_funct_coverage = new();
  endfunction
 
@@ -29,6 +38,11 @@ class first_class;
 
   //initial begin
   task run();
+      // Get the number of transactions
+    if (!$value$plusargs("NR_OF_TRANS=%0d", NUMBER_Of_TR)) begin
+      NUMBER_Of_TR = 5;
+    end
+
     $display("\n\n******************FIRST DISPLAY**************************");
     $display(    "***  THIS IS NOT A SELF-CHECKING TESTBENCH (YET).  YOU  ***");
     $display(    "***  NEED TO VISUALLY VERIFY THAT THE OUTPUT VALUES     ***");
@@ -72,6 +86,13 @@ class first_class;
     $display(  "***  NEED TO VISUALLY VERIFY THAT THE OUTPUT VALUES     ***");
     $display(  "***  MATCH THE INPUT VALUES FOR EACH REGISTER LOCATION  ***");
     $display(  "***********************************************************\n");
+    
+       // Error evaluation
+    if (this.err_cnt == 0) begin
+      $display("TEST PASSED");
+    end else if (this.err_cnt > 0) begin
+      $display("TEST FAILED (%0d errors)", this.err_cnt);
+    end
     $finish;
   endtask 
  // end
@@ -107,6 +128,51 @@ class first_class;
     $display("  operand_a = %0d",   lab2_if.cb.instruction_word.op_a);
     $display("  operand_b = %0d\n", lab2_if.cb.instruction_word.op_b);
     $display("  result    = %0d\n", lab2_if.cb.instruction_word.result);
+  
+  case (lab2_if.cb.instruction_word.opc.name)
+      "PASSA" : begin
+        if (lab2_if.cb.instruction_word.result != lab2_if.cb.instruction_word.op_a) begin
+          $error("PASSA operation error: Expected result = %0d Actual result = %0d\n", lab2_if.cb.instruction_word.op_a, lab2_if.cb.instruction_word.result);
+          err_cnt += 1;
+        end
+      end
+      "PASSB" : begin
+        if (lab2_if.cb.instruction_word.result != lab2_if.cb.instruction_word.op_b) begin
+          $error("PASSB operation error: Expected result = %0d Actual result = %0d\n", lab2_if.cb.instruction_word.op_b, lab2_if.cb.instruction_word.result);
+          err_cnt += 1;
+        end
+      end
+      "ADD" : begin
+        if (lab2_if.cb.instruction_word.result != $signed(lab2_if.cb.instruction_word.op_a + lab2_if.cb.instruction_word.op_b)) begin
+          $error("ADD operation error: Expected result = %0d Actual result = %0d\n", $signed(lab2_if.cb.instruction_word.op_a + lab2_if.cb.instruction_word.op_b), lab2_if.cb.instruction_word.result);
+          err_cnt += 1;
+        end
+      end
+      "SUB" : begin
+        if (lab2_if.cb.instruction_word.result != $signed(lab2_if.cb.instruction_word.op_a - lab2_if.cb.instruction_word.op_b)) begin
+          $error("SUB operation error: Expected result = %0d Actual result = %0d\n", $signed(lab2_if.cb.instruction_word.op_a - lab2_if.cb.instruction_word.op_b), lab2_if.cb.instruction_word.result);
+          err_cnt += 1;
+        end
+      end
+      "MULT" : begin
+        if (lab2_if.cb.instruction_word.result != $signed(lab2_if.cb.instruction_word.op_a * lab2_if.cb.instruction_word.op_b)) begin
+          $error("MULT operation error: Expected result = %0d Actual result = %0d\n", $signed(lab2_if.cb.instruction_word.op_a * lab2_if.cb.instruction_word.op_b), lab2_if.cb.instruction_word.result);
+          err_cnt += 1;
+        end
+      end
+      "DIV" : begin
+        if (lab2_if.cb.instruction_word.result != $signed(lab2_if.cb.instruction_word.op_a / lab2_if.cb.instruction_word.op_b)) begin
+          $error("DIV operation error: Expected result = %0d Actual result = %0d\n", $signed(lab2_if.cb.instruction_word.op_a / lab2_if.cb.instruction_word.op_b), lab2_if.cb.instruction_word.result);
+          err_cnt += 1;
+        end
+      end
+      "MOD" : begin
+        if (lab2_if.cb.instruction_word.result != $signed(lab2_if.cb.instruction_word.op_a % lab2_if.cb.instruction_word.op_b)) begin
+          $error("MOD operation error: Expected result = %0d Actual result = %0d\n", $signed(lab2_if.cb.instruction_word.op_a % lab2_if.cb.instruction_word.op_b), lab2_if.cb.instruction_word.result);
+          err_cnt += 1;
+        end
+      end
+    endcase
   endfunction: print_results
 
 endclass

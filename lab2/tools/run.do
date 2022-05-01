@@ -4,7 +4,7 @@
 #---------------------------------------------------------------------------------------
 
 # Set transcript file name
- transcript file ../reports/regression_transcript/transcript_$1
+ transcript file ../reports/regression_transcript/transcript_$1\_$2
 
 # Check if the sources must be re-compiled
 if {[file isdirectory work]} {
@@ -21,8 +21,8 @@ if {$compile_on || [batch_mode] == 0} {
 }
 
 # Load project
-#eval vsim -novopt -quiet -coverage +code=bcesft +notimingchecks +nowarnTSCALE -sv_seed $1 -sva top
- eval vsim -novopt -quiet -nocoverage +notimingchecks +nowarnTSCALE -sva -sv_seed $1 top
+#eval vsim -novopt -quiet -coverage +code=bcesft +notimingchecks +nowarnTSCALE -sv_seed $1 + NR_OF_TRANS=$2 -sva top
+ eval vsim -novopt -quiet -nocoverage +notimingchecks +nowarnTSCALE -sva -sv_seed $1 +NR_OF_TRANS=$2 top 
 
 # Run log/wave commands
 # Batch_mode = 0 [GUI_mode]; Batch_mode = 1 [regress_mode]
@@ -31,7 +31,7 @@ if {[batch_mode] == 0} {
   eval do wave.do
 }
 
-# On brake:
+# On break:
 onbreak {
   # save coverage report file (when loading project with coverage)
     #eval coverage save "../reports/regression_coverage/coverage_$1.ucdb"
